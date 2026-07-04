@@ -166,19 +166,44 @@ Documents/
 
 ---
 
-## 常用控制指令（您可以用中文直接請 Antigravity 操作）
+## 常用控制指令 與 🇹🇼 強制繁體中文（zh-TW）生成規範
 
-| 您說的話 | NotebookLM 會做的事 | 存放位置 |
+在預設狀態下，Google NotebookLM 生成素材時（尤其是簡報與資訊圖表）可能會預設使用英文。為了確保產出的所有成品均為**繁體中文（Traditional Chinese）**，我們必須在調用指令時明確指定 `--language zh-TW`，或在焦點（focus/prompt）中加入強制指令。
+
+請參考以下常用控制指令對照表：
+
+| 您說的話 | Antigravity 執行的背後指令 (強制繁體中文) | 存放位置 |
 |----------|-------------------|---------|
-| 「幫我用這份 PDF 建一個 notebook」 | 建立 notebook + 上傳 PDF 作為資料來源 | — |
-| 「幫我產生教學簡報」 | 生成 Slide Deck（可匯出 .pptx） | slides/ |
-| 「幫我做一張資訊圖表」 | 生成 Infographic | infographics/ |
-| 「幫我產生音訊概覽（Podcast）」 | 生成 Audio Overview | audio/ |
-| 「幫我產生影片概覽」 | 生成 Video Overview | video/ |
-| 「幫我產生報告並匯出成文件」 | 生成 Report，匯出為 Google Docs | docs/ |
-| 「幫我做數據表格並匯出試算表」 | 生成 Data Table，匯出為 Google Sheets | sheets/ |
-| 「幫我產生心智圖」 | 生成 Mind Map | mindmaps/ |
-| 「幫我出測驗題 / 閃卡」 | 生成 Quiz / Flashcards | quizzes/ |
+| 「幫我用這份 PDF 建一個 notebook」 | `nlm notebook create --name "<名稱>"`<br>`nlm source create --file "<路徑>"` | — |
+| 「幫我產生教學簡報」 | `nlm slides create <NOTEBOOK_ID> --language zh-TW` | slides/ |
+| 「幫我做一張資訊圖表」 | `nlm infographic create <NOTEBOOK_ID> --language zh-TW` | infographics/ |
+| 「幫我產生音訊概覽（Podcast）」 | `nlm audio create <NOTEBOOK_ID>` *(語音為英文，但可用 focus 引導簡介為中文)* | audio/ |
+| 「幫我產生影片概覽」 | `nlm video create <NOTEBOOK_ID>` | video/ |
+| 「幫我產生報告並匯出成文件」 | `nlm report create <NOTEBOOK_ID> --language zh-TW` | docs/ |
+| 「幫我做數據表格並匯出試算表」 | `nlm data-table create <NOTEBOOK_ID> "<描述>" --language zh-TW` | sheets/ |
+| 「幫我產生心智圖」 | `nlm mindmap create <NOTEBOOK_ID> --title "<中文標題>"` | mindmaps/ |
+| 「幫我出測驗題 / 閃卡」 | `nlm quiz create <NOTEBOOK_ID> --focus "請全部使用繁體中文出題"`<br>`nlm flashcards create <NOTEBOOK_ID> --focus "請全部使用繁體中文製作"` | quizzes/ |
+
+---
+
+## 🤖 AI Agent (Antigravity) 專用語系與生成指令規範 (Agent Execution Instructions)
+
+當 Antigravity 讀取此文件作為技能或指令指引時，必須嚴格遵守以下操作規範：
+
+1. **強制繁體中文語系參數**：
+   在呼叫 NotebookLM 相關 MCP 工具或 CLI 命令進行生成時，對於支援 `--language` 的生成任務，必須強制帶入 `--language zh-TW` 參數：
+   - 產生簡報（Slide Deck）：`slides create ... --language zh-TW`
+   - 產生資訊圖表（Infographic）：`infographic create ... --language zh-TW`
+   - 產生報告（Report）：`report create ... --language zh-TW`
+   - 產生數據表格（Data Table）：`data-table create ... --language zh-TW`
+
+2. **引導與焦點指示（Focus & Prompt）**：
+   對於不支援 `--language` 參數但支援 `--focus` 或 `--prompt` 的生成命令（例如 `quiz`、`flashcards`、`audio`、`video` 等），必須在參數中加上明確的中文指示，強制 NotebookLM 底層使用繁體中文生成。例如：
+   - `quiz create ... --focus "請使用繁體中文（zh-TW）出題，切勿使用英文或簡體字。"`
+   - `flashcards create ... --focus "請使用繁體中文（zh-TW）製作閃卡。"`
+
+3. **雙重語系檢驗與修正**：
+   - 如果下載回來的檔案內容為英文或簡體中文，Agent 必須主動使用 `revise`（例如 `slides revise`）或重新生成，並在修改指令中明確指出「請將以下內容全部翻譯並重寫為精美、專業的繁體中文（zh-TW）」。
 
 ---
 
@@ -187,5 +212,6 @@ Documents/
 | 狀況 | 原因 | 解法 |
 |------|------|------|
 | `No such command 'mcp'` | 使用了錯誤的 command 呼叫（如 `nlm mcp`） | 修正 command 為 `notebooklm-mcp.exe`，且不要在 `args` 傳入 `mcp` |
+| 生成的簡報是英文版 | 未在指令中加上 `--language zh-TW` | 在 `nlm slides create` 時務必加上 `--language zh-TW` 參數 |
 | 讀寫筆記本時失敗 | Google 登入 Cookie 過期或失效 | 重新執行 `nlm login`，並用 `nlm doctor` 驗證 |
 | JSON 格式錯誤 | 修改 `mcp_config.json` 時漏了逗號或括號 | 驗證 `mcp_config.json` 格式，路徑反斜線須使用 `\\` 雙斜線 |
