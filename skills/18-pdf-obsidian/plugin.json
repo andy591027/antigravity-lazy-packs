@@ -1,0 +1,9 @@
+{
+  "name": "pdf-obsidian-skill",
+  "version": "1.0.0",
+  "description": "Convert PDF documents into beautiful Markdown using Gemini and save directly to Obsidian",
+  "author": {
+    "name": "Antigravity"
+  },
+  "license": "MIT"
+}

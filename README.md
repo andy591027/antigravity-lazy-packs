@@ -12,10 +12,11 @@
 引導您在 Antigravity 系統中快速對接並啟用今日所有最頂尖的開發與大腦整合服務：
 - **連接 Google NotebookLM**：安裝、驗證與配置 `notebooklm-mcp-cli`，直接與您的線上記事本筆記與 sources 對談。
 - **連接 GitHub**：快速對接 GitHub API、檢查登入狀態與排除 GITHUB_TOKEN 的權限衝突。
-- **建置三大高效率工作流自訂技能**：
+- **建置四大高效率工作流自訂技能**：
   1. 🛠️ **專案初始化 (`15-project-init`)**：一鍵建立標準目錄結構、`AGENTS.md`、`task.md`。
   2. ☀️ **開工技能 (`16-work-start`)**：自動檢查 Git 狀態、同步雲端、喚醒任務並條列今日待辦。
   3. 🌙 **收工技能 (`17-work-close`)**：自動安檢、一鍵 Conventional Commit 本地提交、推送備份至雲端並登錄 TODO 進度。
+  4. 📚 **PDF 轉 Obsidian (`pdf-obsidian`)**：智慧自動分卷上傳，將複雜表格扁平化防止空白，自動對齊首行 Frontmatter 與包裝 Callout 引用。
 - **極致繁體中文原生生圖與繪製**：完全捨棄第三方 plugins，直接調用 Antigravity 內建高規 `generate_image` 生圖工具與 Python Pillow 向量中文折行引擎，在指定資料夾生成印刷級繁體中文資訊圖表。
 
 ---
@@ -28,10 +29,14 @@
 - [新專案套用教學指南.md](新專案套用教學指南.md) — **【實用】後續新專案套用、安裝與三大技能實戰口令教學。**
 - [10-連接-Antigravity-極致整合懶人包.md](10-連接-Antigravity-極致整合懶人包.md) — 專門為別的使用者設計的「一鍵讀取」懶人包 MD 導讀檔案。
 - [SKILL.md](SKILL.md) — 專屬自訂技能的主入口註冊檔。
-- `skills/` — 三大自動化高規自訂技能目錄。
+- `skills/` — 四大自動化高規自訂技能目錄。
   - `skills/15-project-init/SKILL.md` — 專案初始化技能。
   - `skills/16-work-start/SKILL.md` — 開工技能。
   - `skills/17-work-close/SKILL.md` — 收工技能。
+  - `skills/18-pdf-obsidian/` — PDF 轉 Obsidian 智慧重構清洗技能 (Plugin)。
+    - `skills/18-pdf-obsidian/SKILL.md` — 技能主入口及參數說明文件。
+    - `skills/18-pdf-obsidian/plugin.json` — 技能插件配置檔。
+    - `skills/18-pdf-obsidian/skills/pdf_to_obsidian.py` — 技術文件結構化清洗與首行對齊 Python 核心腳本。
 - 🎨 **視覺與互動式資訊圖表展示**：
   - [ai_agent_era_concept.png](ai_agent_era_concept.png) — 科技暗色調人機協作概念背景圖。
   - [infographic_ai_agent_era.png](infographic_ai_agent_era.png) — 本地 Python (Pillow) 向量繪圖程式結合微軟正黑體生成的排版資訊圖表。
@@ -81,6 +86,7 @@
 - 🛠️ **專案初始化**：呼叫 `「準備開新專案」` 或 `「初始化專案」`。
 - ☀️ **開工狀態檢查**：呼叫 `「開工！」` 或 `「準備開始工作」`。
 - 🌙 **收工自動備份**：呼叫 `「今天寫得差不多了，收工！」` 或 `「結束今天工作」`。
+- 📚 **PDF 轉 Obsidian 頂級智慧重構**：呼叫 `「解析 PDF」`、`「把 PDF 存到 Obsidian」` 或 `「讀取 PDF 筆記」`。
 
 ### 步驟四：使用原生高質感繁體中文生圖
 直接在 Antigravity 系統中要求：
